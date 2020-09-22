@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConexionBaseDeDatos\ConexionBaseDeDatos.csproj">
+      <Project>{6b4947f4-962c-4a9a-9af8-0759ededaea0}</Project>
+      <Name>ConexionBaseDeDatos</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
