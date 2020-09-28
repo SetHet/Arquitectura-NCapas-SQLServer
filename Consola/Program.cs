@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ConexionBaseDeDatos;
+using Negocio;
+using ModeloDeDatos;
 
 namespace Consola
 {
@@ -11,7 +12,27 @@ namespace Consola
     {
         static void Main(string[] args)
         {
-            new ConexionSQLServer().ConsoleTest();
+            NegocioConexion.SetUp();
+
+            NegocioUsuario nUser = new NegocioUsuario();
+
+            //nUser.AddUser("Kevin");
+            int index = 0;
+            while (true)
+            {
+                Usuario user = nUser.GetUser(index++);
+
+                if (user != null)
+                {
+                    Console.WriteLine(user.ToString());
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            Console.ReadKey();
         }
     }
 }

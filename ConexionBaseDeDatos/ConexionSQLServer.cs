@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -13,37 +14,73 @@ namespace ConexionBaseDeDatos
     {
         private string conectionString;
         private SqlConnection sqlConnection;
-        public string ConectionString { get => conectionString; set => conectionString = value; }
-        public SqlConnection SqlConnection { get => sqlConnection; set => sqlConnection = value; }
+        private string server = "";
+        private string database = "";
 
         public ConexionSQLServer()
         {
-            ConectionString = @"Server = DESKTOP-F8TM6K2; Database = TestA; Trusted_Connection = True;";
-            SqlConnection = new SqlConnection(ConectionString);
+            SqlConnection = new SqlConnection();
         }
 
-        public void Open()
+        public string ConectionString { get => conectionString; set => conectionString = value; }
+        public SqlConnection SqlConnection { get => sqlConnection; set => sqlConnection = value; }
+        public string Server { get => server; set => server = value; }
+        public string Database { get => database; set => database = value; }
+
+        public bool Connect()
+        {
+            if (Server.Equals(String.Empty))
+            {
+                MessageBox.Show("Error nombre servidor", "Sistema");
+                return false;
+            }
+            if (Database.Equals(String.Empty))
+            {
+                MessageBox.Show("Error nombre base de datos", "Sistema");
+                return false;
+            }
+            
+            ConectionString = $"Server = {server}; Database = {database}; Trusted_Connection = True;";
+            
+            try
+            {
+                SqlConnection = new SqlConnection(ConectionString);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error en la conexion\n" + ex.Message, "Sistema");
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool Open()
         {
             try
             {
-                SqlConnection.Open();
+                this.SqlConnection.Open();
             }
             catch(Exception ex)
             {
                 MessageBox.Show("Error en \"ConexionSQLServer.Open()\" \n\n" + ex.Message);
+                return false;
             }
+            return true;
         }
 
-        public void Close()
+        public bool Close()
         {
             try
             {
-                SqlConnection.Close();
+                this.SqlConnection.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error en \"ConexionSQLServer.Close()\" \n\n" + ex.Message);
+                return false;
             }
+            return true;
         }
 
         public bool isOpen()
@@ -64,38 +101,51 @@ namespace ConexionBaseDeDatos
         }
 
 
-        public DataTable Select(string table, string query)
+        public DataTable Select(string query)
         {
             DataTable dataTable = new DataTable();
 
+            this.Open();
+
             try
             {
-                
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(query, SqlConnection);
+                dataAdapter.Fill(dataTable);
             }
             catch(Exception ex)
             {
-
+                MessageBox.Show("Error en el \"ConexionSQLServer.Select\" \n" + ex.Message, "Sistema");
             }
+
+            this.Close();
 
             return dataTable;
         }
 
         public void NoSelect(string query)
         {
+            this.Open();
+
             try
             {
-
+                SqlCommand command = new SqlCommand(query, SqlConnection);
+                command.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show("Error en el \"ConexionSQLServer.NoSelect\" \n" + ex.Message, "Sistema");
             }
+
+            this.Close();
         }
 
 
         public void ConsoleTest()
         {
             ConexionSQLServer con = new ConexionSQLServer();
+            con.server = "DESKTOP-F8TM6K2";
+            con.database = "TestA";
+            con.Connect();
 
             Console.WriteLine("Conectado: " + con.isOpen());
             con.Open();

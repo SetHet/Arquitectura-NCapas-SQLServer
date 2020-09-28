@@ -50,9 +50,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ConexionBaseDeDatos\ConexionBaseDeDatos.csproj">
-      <Project>{6b4947f4-962c-4a9a-9af8-0759ededaea0}</Project>
-      <Name>ConexionBaseDeDatos</Name>
+    <ProjectReference Include="..\ModeloDeDatos\ModeloDeDatos.csproj">
+      <Project>{56ed9049-6d58-4f4d-969f-acd296a45c4b}</Project>
+      <Name>ModeloDeDatos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Negocio\Negocio.csproj">
+      <Project>{c9e160ac-d27b-4820-b87e-c226fdbfe9f6}</Project>
+      <Name>Negocio</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

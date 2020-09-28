@@ -41,7 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NegocioConexion.cs" />
+    <Compile Include="NegocioUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConexionBaseDeDatos\ConexionBaseDeDatos.csproj">
+      <Project>{6b4947f4-962c-4a9a-9af8-0759ededaea0}</Project>
+      <Name>ConexionBaseDeDatos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModeloDeDatos\ModeloDeDatos.csproj">
+      <Project>{56ed9049-6d58-4f4d-969f-acd296a45c4b}</Project>
+      <Name>ModeloDeDatos</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
