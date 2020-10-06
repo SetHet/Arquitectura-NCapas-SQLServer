@@ -40,7 +40,7 @@ namespace ConexionBaseDeDatos
                 return false;
             }
             
-            ConectionString = $"Server = {server}; Database = {database}; Trusted_Connection = True;";
+            ConectionString = $"Server = {Server}; Database = {Database}; Trusted_Connection = True;";
             
             try
             {
@@ -143,8 +143,8 @@ namespace ConexionBaseDeDatos
         public void ConsoleTest()
         {
             ConexionSQLServer con = new ConexionSQLServer();
-            con.server = "DESKTOP-F8TM6K2";
-            con.database = "TestA";
+            con.Server = "DESKTOP-F8TM6K2";
+            con.Database = "TestA";
             con.Connect();
 
             Console.WriteLine("Conectado: " + con.isOpen());
